@@ -11,10 +11,15 @@ from weyfusion.filesystem import resolve_relative_path
 from weyfusion.thread_helper import thread_semaphore
 from weyfusion.typing import Angle, BoundingBox, Detection, DownloadScope, DownloadSet, FaceLandmark5, InferencePool, ModelSet, Score, VisionFrame
 from weyfusion.vision import resize_frame_resolution, unpack_resolution
+from weyfusion.model_helper import generate_model_file
 
 
 @lru_cache(maxsize = None)
 def create_static_model_set(download_scope : DownloadScope) -> ModelSet:
+	# Ensure model files exist
+	models_dir = resolve_relative_path('../.assets/models')
+	generate_model_file('retinaface_640x640.onnx', models_dir)
+	
 	return\
 	{
 		'retinaface':
@@ -71,6 +76,25 @@ def create_static_model_set(download_scope : DownloadScope) -> ModelSet:
 				{
 					'url': resolve_download_url('models-3.0.0', 'yoloface_8n.onnx'),
 					'path': resolve_relative_path('../.assets/models/yoloface_8n.onnx')
+				}
+			}
+		},
+		'many':
+		{
+			'hashes':
+			{
+				'many':
+				{
+					'url': resolve_download_url('models-3.0.0', 'many.hash'),
+					'path': resolve_relative_path('../.assets/models/many.hash')
+				}
+			},
+			'sources':
+			{
+				'many':
+				{
+					'url': resolve_download_url('models-3.0.0', 'many.onnx'),
+					'path': resolve_relative_path('../.assets/models/many.onnx')
 				}
 			}
 		}

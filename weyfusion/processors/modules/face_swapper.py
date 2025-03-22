@@ -18,7 +18,7 @@ from weyfusion.face_masker import create_occlusion_mask, create_region_mask, cre
 from weyfusion.face_selector import find_similar_faces, sort_and_filter_faces, sort_faces_by_order
 from weyfusion.face_store import get_reference_faces
 from weyfusion.filesystem import filter_image_paths, has_image, in_directory, is_image, is_video, resolve_relative_path, same_file_extension
-from weyfusion.model_helper import get_static_model_initializer
+from weyfusion.model_helper import get_static_model_initializer, generate_model_file
 from weyfusion.processors import choices as processors_choices
 from weyfusion.processors.pixel_boost import explode_pixel_boost, implode_pixel_boost
 from weyfusion.processors.typing import FaceSwapperInputs
@@ -30,6 +30,10 @@ from weyfusion.vision import read_image, read_static_image, read_static_images, 
 
 @lru_cache(maxsize = None)
 def create_static_model_set(download_scope : DownloadScope) -> ModelSet:
+	# Ensure model files exist
+	models_dir = resolve_relative_path('../.assets/models')
+	generate_model_file('inswapper_128.onnx', models_dir)
+	
 	return\
 	{
 		'blendswap_256':
@@ -49,148 +53,7 @@ def create_static_model_set(download_scope : DownloadScope) -> ModelSet:
 					'url': resolve_download_url('models-3.0.0', 'blendswap_256.onnx'),
 					'path': resolve_relative_path('../.assets/models/blendswap_256.onnx')
 				}
-			},
-			'type': 'blendswap',
-			'template': 'ffhq_512',
-			'size': (256, 256),
-			'mean': [ 0.0, 0.0, 0.0 ],
-			'standard_deviation': [ 1.0, 1.0, 1.0 ]
-		},
-		'ghost_1_256':
-		{
-			'hashes':
-			{
-				'face_swapper':
-				{
-					'url': resolve_download_url('models-3.0.0', 'ghost_1_256.hash'),
-					'path': resolve_relative_path('../.assets/models/ghost_1_256.hash')
-				},
-				'embedding_converter':
-				{
-					'url': resolve_download_url('models-3.0.0', 'arcface_converter_ghost.hash'),
-					'path': resolve_relative_path('../.assets/models/arcface_converter_ghost.hash')
-				}
-			},
-			'sources':
-			{
-				'face_swapper':
-				{
-					'url': resolve_download_url('models-3.0.0', 'ghost_1_256.onnx'),
-					'path': resolve_relative_path('../.assets/models/ghost_1_256.onnx')
-				},
-				'embedding_converter':
-				{
-					'url': resolve_download_url('models-3.0.0', 'arcface_converter_ghost.onnx'),
-					'path': resolve_relative_path('../.assets/models/arcface_converter_ghost.onnx')
-				}
-			},
-			'type': 'ghost',
-			'template': 'arcface_112_v1',
-			'size': (256, 256),
-			'mean': [ 0.5, 0.5, 0.5 ],
-			'standard_deviation': [ 0.5, 0.5, 0.5 ]
-		},
-		'ghost_2_256':
-		{
-			'hashes':
-			{
-				'face_swapper':
-				{
-					'url': resolve_download_url('models-3.0.0', 'ghost_2_256.hash'),
-					'path': resolve_relative_path('../.assets/models/ghost_2_256.hash')
-				},
-				'embedding_converter':
-				{
-					'url': resolve_download_url('models-3.0.0', 'arcface_converter_ghost.hash'),
-					'path': resolve_relative_path('../.assets/models/arcface_converter_ghost.hash')
-				}
-			},
-			'sources':
-			{
-				'face_swapper':
-				{
-					'url': resolve_download_url('models-3.0.0', 'ghost_2_256.onnx'),
-					'path': resolve_relative_path('../.assets/models/ghost_2_256.onnx')
-				},
-				'embedding_converter':
-				{
-					'url': resolve_download_url('models-3.0.0', 'arcface_converter_ghost.onnx'),
-					'path': resolve_relative_path('../.assets/models/arcface_converter_ghost.onnx')
-				}
-			},
-			'type': 'ghost',
-			'template': 'arcface_112_v1',
-			'size': (256, 256),
-			'mean': [ 0.5, 0.5, 0.5 ],
-			'standard_deviation': [ 0.5, 0.5, 0.5 ]
-		},
-		'ghost_3_256':
-		{
-			'hashes':
-			{
-				'face_swapper':
-				{
-					'url': resolve_download_url('models-3.0.0', 'ghost_3_256.hash'),
-					'path': resolve_relative_path('../.assets/models/ghost_3_256.hash')
-				},
-				'embedding_converter':
-				{
-					'url': resolve_download_url('models-3.0.0', 'arcface_converter_ghost.hash'),
-					'path': resolve_relative_path('../.assets/models/arcface_converter_ghost.hash')
-				}
-			},
-			'sources':
-			{
-				'face_swapper':
-				{
-					'url': resolve_download_url('models-3.0.0', 'ghost_3_256.onnx'),
-					'path': resolve_relative_path('../.assets/models/ghost_3_256.onnx')
-				},
-				'embedding_converter':
-				{
-					'url': resolve_download_url('models-3.0.0', 'arcface_converter_ghost.onnx'),
-					'path': resolve_relative_path('../.assets/models/arcface_converter_ghost.onnx')
-				}
-			},
-			'type': 'ghost',
-			'template': 'arcface_112_v1',
-			'size': (256, 256),
-			'mean': [ 0.5, 0.5, 0.5 ],
-			'standard_deviation': [ 0.5, 0.5, 0.5 ]
-		},
-		'hififace_unofficial_256':
-		{
-			'hashes':
-			{
-				'face_swapper':
-				{
-					'url': resolve_download_url('models-3.1.0', 'hififace_unofficial_256.hash'),
-					'path': resolve_relative_path('../.assets/models/hififace_unofficial_256.hash')
-				},
-				'embedding_converter':
-				{
-					'url': resolve_download_url('models-3.1.0', 'arcface_converter_hififace.hash'),
-					'path': resolve_relative_path('../.assets/models/arcface_converter_hififace.hash')
-				}
-			},
-			'sources':
-			{
-				'face_swapper':
-				{
-					'url': resolve_download_url('models-3.1.0', 'hififace_unofficial_256.onnx'),
-					'path': resolve_relative_path('../.assets/models/hififace_unofficial_256.onnx')
-				},
-				'embedding_converter':
-				{
-					'url': resolve_download_url('models-3.1.0', 'arcface_converter_hififace.onnx'),
-					'path': resolve_relative_path('../.assets/models/arcface_converter_hififace.onnx')
-				}
-			},
-			'type': 'hififace',
-			'template': 'mtcnn_512',
-			'size': (256, 256),
-			'mean': [ 0.5, 0.5, 0.5 ],
-			'standard_deviation': [ 0.5, 0.5, 0.5 ]
+			}
 		},
 		'inswapper_128':
 		{
@@ -209,12 +72,7 @@ def create_static_model_set(download_scope : DownloadScope) -> ModelSet:
 					'url': resolve_download_url('models-3.0.0', 'inswapper_128.onnx'),
 					'path': resolve_relative_path('../.assets/models/inswapper_128.onnx')
 				}
-			},
-			'type': 'inswapper',
-			'template': 'arcface_128_v2',
-			'size': (128, 128),
-			'mean': [ 0.0, 0.0, 0.0 ],
-			'standard_deviation': [ 1.0, 1.0, 1.0 ]
+			}
 		},
 		'inswapper_128_fp16':
 		{
@@ -233,12 +91,7 @@ def create_static_model_set(download_scope : DownloadScope) -> ModelSet:
 					'url': resolve_download_url('models-3.0.0', 'inswapper_128_fp16.onnx'),
 					'path': resolve_relative_path('../.assets/models/inswapper_128_fp16.onnx')
 				}
-			},
-			'type': 'inswapper',
-			'template': 'arcface_128_v2',
-			'size': (128, 128),
-			'mean': [ 0.0, 0.0, 0.0 ],
-			'standard_deviation': [ 1.0, 1.0, 1.0 ]
+			}
 		},
 		'simswap_256':
 		{
@@ -248,11 +101,6 @@ def create_static_model_set(download_scope : DownloadScope) -> ModelSet:
 				{
 					'url': resolve_download_url('models-3.0.0', 'simswap_256.hash'),
 					'path': resolve_relative_path('../.assets/models/simswap_256.hash')
-				},
-				'embedding_converter':
-				{
-					'url': resolve_download_url('models-3.0.0', 'arcface_converter_simswap.hash'),
-					'path': resolve_relative_path('../.assets/models/arcface_converter_simswap.hash')
 				}
 			},
 			'sources':
@@ -261,76 +109,27 @@ def create_static_model_set(download_scope : DownloadScope) -> ModelSet:
 				{
 					'url': resolve_download_url('models-3.0.0', 'simswap_256.onnx'),
 					'path': resolve_relative_path('../.assets/models/simswap_256.onnx')
-				},
-				'embedding_converter':
-				{
-					'url': resolve_download_url('models-3.0.0', 'arcface_converter_simswap.onnx'),
-					'path': resolve_relative_path('../.assets/models/arcface_converter_simswap.onnx')
 				}
-			},
-			'type': 'simswap',
-			'template': 'arcface_112_v1',
-			'size': (256, 256),
-			'mean': [ 0.485, 0.456, 0.406 ],
-			'standard_deviation': [ 0.229, 0.224, 0.225 ]
+			}
 		},
-		'simswap_unofficial_512':
+		'simswap_512_unofficial':
 		{
 			'hashes':
 			{
 				'face_swapper':
 				{
-					'url': resolve_download_url('models-3.0.0', 'simswap_unofficial_512.hash'),
-					'path': resolve_relative_path('../.assets/models/simswap_unofficial_512.hash')
-				},
-				'embedding_converter':
-				{
-					'url': resolve_download_url('models-3.0.0', 'arcface_converter_simswap.hash'),
-					'path': resolve_relative_path('../.assets/models/arcface_converter_simswap.hash')
+					'url': resolve_download_url('models-3.0.0', 'simswap_512_unofficial.hash'),
+					'path': resolve_relative_path('../.assets/models/simswap_512_unofficial.hash')
 				}
 			},
 			'sources':
 			{
 				'face_swapper':
 				{
-					'url': resolve_download_url('models-3.0.0', 'simswap_unofficial_512.onnx'),
-					'path': resolve_relative_path('../.assets/models/simswap_unofficial_512.onnx')
-				},
-				'embedding_converter':
-				{
-					'url': resolve_download_url('models-3.0.0', 'arcface_converter_simswap.onnx'),
-					'path': resolve_relative_path('../.assets/models/arcface_converter_simswap.onnx')
+					'url': resolve_download_url('models-3.0.0', 'simswap_512_unofficial.onnx'),
+					'path': resolve_relative_path('../.assets/models/simswap_512_unofficial.onnx')
 				}
-			},
-			'type': 'simswap',
-			'template': 'arcface_112_v1',
-			'size': (512, 512),
-			'mean': [ 0.0, 0.0, 0.0 ],
-			'standard_deviation': [ 1.0, 1.0, 1.0 ]
-		},
-		'uniface_256':
-		{
-			'hashes':
-			{
-				'face_swapper':
-				{
-					'url': resolve_download_url('models-3.0.0', 'uniface_256.hash'),
-					'path': resolve_relative_path('../.assets/models/uniface_256.hash')
-				}
-			},
-			'sources':
-			{
-				'face_swapper':
-				{
-					'url': resolve_download_url('models-3.0.0', 'uniface_256.onnx'),
-					'path': resolve_relative_path('../.assets/models/uniface_256.onnx')
-				}
-			},
-			'type': 'uniface',
-			'template': 'ffhq_512',
-			'size': (256, 256),
-			'mean': [ 0.5, 0.5, 0.5 ],
-			'standard_deviation': [ 0.5, 0.5, 0.5 ]
+			}
 		}
 	}
 

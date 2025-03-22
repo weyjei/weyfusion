@@ -58,12 +58,12 @@ download_provider_set : DownloadProviderSet =\
 	'github':
 	{
 		'url': 'https://github.com',
-		'path': '/weyfusion/weyfusion-assets/releases/download/{base_name}/{file_name}'
+		'path': '/weyjei/weyfusion-assets/releases/download/{base_name}/{file_name}'
 	},
 	'huggingface':
 	{
 		'url': 'https://huggingface.co',
-		'path': '/weyfusion/{base_name}/resolve/main/{file_name}'
+		'path': '/weyjei/{base_name}/resolve/main/{file_name}'
 	}
 }
 download_providers : List[DownloadProvider] = list(download_provider_set.keys())

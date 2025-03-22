@@ -1,57 +1,81 @@
 WEYFUSION
 ==========
 
-> Industry leading face manipulation platform.
+> Industry leading face manipulation platform
 
-[![Build Status](https://img.shields.io/github/actions/workflow/status/weyfusion/weyfusion/ci.yml.svg?branch=master)](https://github.com/weyfusion/weyfusion/actions?query=workflow:ci)
-[![Coverage Status](https://img.shields.io/coveralls/weyfusion/weyfusion.svg)](https://coveralls.io/r/weyfusion/weyfusion)
-![License](https://img.shields.io/badge/license-MIT-green)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/weyjei/weyfusion/ci.yml.svg?branch=master)](https://github.com/weyjei/weyfusion/actions?query=workflow:ci)
+[![Coverage Status](https://img.shields.io/coveralls/weyjei/weyfusion.svg)](https://coveralls.io/r/weyjei/weyfusion)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE.md)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/weyjei/weyfusion/blob/main/WeyFusion_Colab.ipynb)
 
+WeyFusion is a powerful face swapping and manipulation platform with advanced features:
+
+- No content restrictions
+- Improved model download system
+- Optimized performance
+- User-friendly interface
+
+## Key Features
+
+- Face swapping for images and videos
+- Multiple face detection models
+- Support for enhancers and processors
+- CUDA acceleration for fast processing
+- Interactive Gradio UI
+
+## Installation
+
+### Basic Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/weyjei/weyfusion.git
+
+# Navigate to the directory
+cd weyfusion
+
+# Install required dependencies
+pip install -r requirements.txt
+
+# Install with CUDA support
+python install.py --onnxruntime cuda
+```
+
+### Google Colab (Recommended)
+
+For the easiest setup with no installation required, use our Google Colab notebook:
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/weyjei/weyfusion/blob/main/WeyFusion_Colab.ipynb)
+
+1. Click the "Open in Colab" button above
+2. Run all cells to set up the environment
+3. Access the full Gradio UI through the provided link
+4. No need to install anything on your local machine!
+
+The Colab notebook provides:
+- Full Gradio user interface
+- CUDA acceleration
+- Automatic model downloads
+- No content restrictions
+
+## Usage
+
+Run WeyFusion with the UI:
+
+```bash
+python weyfusion.py run --ui-layouts default --execution-providers cuda
+```
+
+Or run in headless mode:
+
+```bash
+python weyfusion.py headless-run --source-paths SOURCE_PATH --target-path TARGET_PATH --output-path OUTPUT_PATH --execution-providers cuda
+```
 
 Preview
 -------
 
-![Preview](https://raw.githubusercontent.com/weyfusion/weyfusion/master/.github/preview.png?sanitize=true)
-
-
-Installation
-------------
-
-Be aware, the [installation](https://docs.weyfusion.io/installation) needs technical skills and is not recommended for beginners. In case you are not comfortable using a terminal, our [Windows Installer](http://windows-installer.weyfusion.io) and [macOS Installer](http://macos-installer.weyfusion.io) get you started.
-
-
-Usage
------
-
-Run the command:
-
-```
-python weyfusion.py [commands] [options]
-
-options:
-  -h, --help                                      show this help message and exit
-  -v, --version                                   show program's version number and exit
-
-commands:
-    run                                           run the program
-    headless-run                                  run the program in headless mode
-    batch-run                                     run the program in batch mode
-    force-download                                force automate downloads and exit
-    job-list                                      list jobs by status
-    job-create                                    create a drafted job
-    job-submit                                    submit a drafted job to become a queued job
-    job-submit-all                                submit all drafted jobs to become a queued jobs
-    job-delete                                    delete a drafted, queued, failed or completed job
-    job-delete-all                                delete all drafted, queued, failed and completed jobs
-    job-add-step                                  add a step to a drafted job
-    job-remix-step                                remix a previous step from a drafted job
-    job-insert-step                               insert a step to a drafted job
-    job-remove-step                               remove a step from a drafted job
-    job-run                                       run a queued job
-    job-run-all                                   run all queued jobs
-    job-retry                                     retry a failed job
-    job-retry-all                                 retry all failed jobs
-```
+![Preview](https://raw.githubusercontent.com/weyjei/weyfusion/master/.github/preview.png?sanitize=true)
 
 
 Documentation

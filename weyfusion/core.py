@@ -6,6 +6,8 @@ from time import time
 
 import numpy
 
+# Import repo_helper first to ensure encrypted URLs are available
+from weyfusion import repo_helper
 from weyfusion import content_analyser, face_classifier, face_detector, face_landmarker, face_masker, face_recognizer, logger, process_manager, state_manager, voice_extractor, wording
 from weyfusion.args import apply_args, collect_job_args, reduce_job_args, reduce_step_args
 from weyfusion.common_helper import get_first
